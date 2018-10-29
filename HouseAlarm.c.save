@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <wiringPi.h>
+
+void  off(){
+        digitalWrite (1, LOW);
+        digitalWrite (2, LOW);
+        digitalWrite (4, LOW);
+}
+
+
+void arming(){
+	for (i=
+0;i<10;i++) {
+		digitalWrite (1, HIGH) ; delay (500) ;
+		digitalWrite (1,  LOW) ; delay (500) ;
+	}
+	armed();
+}
+
+void armed(){
+	digitalWrite(2, HIGH);
+	for(;;){
+		if(digitalRead(3) == 0){
+			break;
+		}
+		if(digitalRead(0 == 0){
+			
+		}
+	}
+}
+	
+void triggered(){
+	int i = 0;
+	for(i; )
+
+}
+
+int main (int argc, char *argv[]){
+ 	wiringPiSetup () ;
+	pinMode(0, INPUT);		/* IR INPUT */
+	pinMode (1, OUTPUT) ;		/* LED 1 OUTPUT */
+	pinMode (2, OUTPUT) ;		/* LED 2 OUTPUT */
+	pinMode (3, INPUT) ;		/* BUTTON INPUT */
+	pullUpDnControl(3, PUD_UP) ;	
+	pinMode (4, OUTPUT) ;		/* BUZZER OUTPUT */
+
+	while(1){
+		off();
+		if(digitalRead(3) == 0){
+			arming();
+				
+		}
+		
+	}
+
+	/*UNREACHABLE*/
+	return 0;
+}
+
