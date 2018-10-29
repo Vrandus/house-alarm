@@ -68,7 +68,7 @@ void triggered(){
 
 void sounding(){
 	printf("sounding\n");
-	ifttt("https://maker.ifttt.com/use/pBGE7kXtYzolpDvbwspX9Z00uCxf-MuIBjYfEdoKHle", "tailor", "lab05", "Alarm Sounded");
+	ifttt("https://maker.ifttt.com/trigger/alarm_triggered/with/key/mo6d38TDr4os0kDHywen84HzsyRomndILcmO7VGdVgz", "tailor", "lab05", "Alarm Sounded");
 	for(;;){
 		if(time(NULL) % 2 == 0){
 			digitalWrite(1, HIGH);
