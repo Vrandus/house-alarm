@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <wiringPi.h>
-
+#include <time.h>
 
 void  off(){
+	delay(1000);
+	printf("%d\n",time(NULL));
         digitalWrite (1, LOW);
         digitalWrite (2, LOW);
         digitalWrite (4, LOW);
@@ -17,11 +19,14 @@ void  off(){
 void arming(){
 	int i;
 	printf("arming\n");
-	for (i=0;i<10;i++) {
-		digitalWrite (1, HIGH) ; delay (500) ;
-		digitalWrite (1,  LOW) ; delay (500) ;
-		armed();
+	int endTime = time(NULL)+ 10;
+	for (i=time(NULL);i<endTime;i = time(NULL)) {
+		if( i % 2 == 0) {
+			digitalWrite (1, HIGH) ; delay (500) ;
+			digitalWrite (1,  LOW) ; delay (500) ;
+		}
 	}
+	armed();
 }
 
 void armed(){
@@ -30,6 +35,7 @@ void armed(){
 	digitalWrite(4, LOW);
 	printf("armed\n");
 	for( ;; ){
+        printf("%d\n",time(NULL));
 		if(digitalRead(3) == 0){
 			off();
 		}
@@ -42,30 +48,38 @@ void armed(){
 void triggered(){
         printf("Triggered\n");
 	int i;
-	for(i = 0; i <5; i++){
-		digitalWrite(1, HIGH);
-		digitalWrite(2, HIGH); delay(1000);
-		digitalWrite(1, LOW);
-		digitalWrite(2, LOW); delay(1000);
+	int endingTime = time(NULL) + 10;
+	for(i = time(NULL); i <endingTime; i = time(NULL)){
+	        if(time(NULL) % 2 == 0){
+			digitalWrite(1, HIGH);
+			digitalWrite(2, HIGH);
+		}
+		else if(time(NULL) % 2 != 0){
+			digitalWrite(1, LOW);
+			digitalWrite(2, LOW);
+		}
 		if(digitalRead(3) == 0){
 			off();
 		}
 	}
+	sounding();
 
 }
 
 void sounding(){
 	printf("sounding\n");
-	ifttt("http://red.eecs.yorku.ca:8080/trigger/event/with/key/123", "tailor", "lab05", "Alarm Sounded");
+	ifttt("https://maker.ifttt.com/use/pBGE7kXtYzolpDvbwspX9Z00uCxf-MuIBjYfEdoKHle", "tailor", "lab05", "Alarm Sounded");
 	for(;;){
-		digitalWrite(1, HIGH);
-		digitalWrite(2, HIGH);
-		digitalWrite(4, HIGH);
-		delay(2000);
-		digitalWrite(1, LOW);
-		digitalWrite(2, LOW);
-		digitalWrite(4, LOW);
-		delay(2000);
+		if(time(NULL) % 2 == 0){
+			digitalWrite(1, HIGH);
+			digitalWrite(2, HIGH);
+			digitalWrite(4, HIGH);
+		}
+		else if(time(NULL) % 2 != 0){
+			digitalWrite(1, LOW);
+			digitalWrite(2, LOW);
+			digitalWrite(4, LOW);
+		}
 		if(digitalRead(3) == 0){
 			off();
 		}
