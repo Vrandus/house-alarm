@@ -4,7 +4,7 @@ Basic IoT house alarm for raspberry pi in C
 
 ## Wiring
 
-**double check IR sensor inputs and outputs before connecting +5**
+**double check IR sensor inputs and outputs before connecting +5v**
 
 ![image](https://puu.sh/C8kb6/4d7de21abb.jpg)
 
